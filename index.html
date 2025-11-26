@@ -2,142 +2,215 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Cozy Hub</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anime UI</title>
 <style>
-    body {
-        margin: 0;
-        height: 100vh;
-        background: #0a0f1f;
-        overflow: hidden;
-        font-family: Arial, sans-serif;
-        color: white;
-    }
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+  background: black;
+}
 
-    /* Nền sao */
-    .stars {
-        width: 1px;
-        height: 1px;
-        background: transparent;
-        box-shadow: 
-            100px 200px #00eaff, 200px 300px #00eaff, 300px 100px #00eaff,
-            400px 250px #00eaff, 150px 450px #00eaff, 600px 150px #00eaff,
-            320px 550px #00eaff, 500px 80px #00eaff, 250px 600px #00eaff;
-        animation: animStar 80s linear infinite;
-    }
-    @keyframes animStar {
-        from { transform: translateY(0px); }
-        to { transform: translateY(-2000px); }
-    }
+#bgVideo {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -1;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  filter: brightness(60%);
+}
 
-    /* Card chính */
-    .card {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 350px;
-        height: 460px;
-        background: rgba(0, 0, 0, 0.35);
-        padding: 25px;
-        border-radius: 25px;
-        text-align: center;
+#audio { display: none; }
 
-        box-shadow:
-            0 0 25px rgba(0, 255, 255, 0.5),
-            0 0 45px rgba(0, 255, 255, 0.4),
-            0 0 65px rgba(0, 255, 255, 0.25),
-            0 0 90px rgba(0, 255, 255, 0.15);
+.ui-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 380px;
+  padding: 25px;
+  border-radius: 30px;
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 18px white, inset 0 0 18px white;
+  text-align: center;
+  transition: all 0.5s ease;
+  color: white;
+  z-index: 1;
+}
 
-        backdrop-filter: blur(6px);
-    }
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 100%;
+  margin: auto;
+  display: block;
+  border: 3px solid white;
+  object-fit: cover;
+}
 
-    /* Logo */
-    .logo {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        margin-bottom: 10px;
+.bbh-sans-hegarty-regular {
+  font-family: "BBH Sans Hegarty", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
 
-        background: url('https://raw.githubusercontent.com/aovo4504-bit/Cozyhub/refs/heads/main/IMG_0830.png') center/cover;
+.username {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid rgba(255,255,255,0.7);
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  animation: blinkCaret 0.7s step-end infinite;
+  background: linear-gradient(90deg, #ff6ec7, #00eaff, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 6px rgba(255,255,255,0.8),
+               0 0 12px rgba(255,110,199,0.5),
+               0 0 18px rgba(0,234,255,0.4);
+}
 
-        box-shadow:
-            0 0 35px #00eaff,
-            0 0 55px #00eaff;
-    }
+@keyframes blinkCaret {
+  0%, 50%, 100% { border-color: rgba(255,255,255,0.7); }
+  25%, 75% { border-color: transparent; }
+}
 
-    .title {
-        font-size: 28px;
-        font-weight: bold;
-        color: #ff4949;
-        margin-bottom: 8px;
-        text-shadow: 0 0 10px rgba(255, 70, 70, 0.8);
-    }
+.btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: 14px;
+  border: 2px solid white;
+  background: rgba(255,255,255,0.12);
+  color: white;
+  font-size: 17px;
+  cursor: pointer;
+  transition: 0.2s;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+}
 
-    .sub {
-        color: #dcdcdc;
-        font-size: 15px;
-        margin-bottom: 25px;
-    }
+.btn:hover {
+  background: rgba(255,255,255,0.25);
+}
 
-    /* Nút Get Key */
-    .btn {
-        padding: 14px 32px;
-        background: #111;
-        border: 1.5px solid #00eaff;
-        border-radius: 12px;
-        font-size: 18px;
-        color: white;
-        cursor: pointer;
-        transition: 0.3s;
+.mode-switch {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid white;
+  background: rgba(255,255,255,0.15);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+}
 
-        box-shadow: 0 0 20px #00eaff, 0 0 35px #00eaff;
-    }
-    .btn:hover {
-        transform: scale(1.08);
-        box-shadow: 0 0 30px #00eaff, 0 0 45px #00eaff;
-    }
+.mode-switch:hover { background: rgba(255,255,255,0.3); }
+.mode-switch span { font-size: 18px; color: white; }
 
-    /* Icon social */
-    .icons img {
-        width: 50px;
-        margin: 15px;
-        filter: drop-shadow(0 0 15px #00eaff);
-        cursor: pointer;
-        transition: 0.25s;
-    }
-    .icons img:hover {
-        transform: scale(1.2);
-        filter: drop-shadow(0 0 25px #00eaff);
-    }
+.ui-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 30px;
+  padding: 2px;
+  background: white;
+  opacity: 0.3;
+  filter: blur(8px);
+  z-index: -1;
+}
+
+.light {
+  background: rgba(255, 255, 255, 0.25);
+  color: black;
+  border: 2px solid rgba(255,255,255,0.5);
+  box-shadow: 0 0 12px rgba(255,255,255,0.6), inset 0 0 12px rgba(255,255,255,0.3);
+}
+
+.light .btn {
+  background: rgba(0,0,0,0.12);
+  color: black;
+  border: 2px solid rgba(0,0,0,0.3);
+}
+
+.light .btn:hover { background: rgba(0,0,0,0.25); }
+.light .mode-switch span { color: black; }
+
+/* ===================== Footer Note ===================== */
+.footer-note {
+  margin-top: 18px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+  text-align: center;
+  line-height: 1.3;
+}
 </style>
 </head>
 <body>
 
-<div class="stars"></div>
+<video autoplay muted loop id="bgVideo">
+  <source src="https://cdn.discordapp.com/attachments/1439658574187069450/1440945664292032594/copy_A7CA7849-4649-4C82-AFBE-7A25C51248C3.mov?ex=69215239&is=692000b9&hm=e0c6b67d8a22c59a015d39eea8e353a1a95c8ea16c0111ac1740aae1b742ae65&">
+</video>
 
-<div class="card">
-    <div class="logo"></div>
+<audio id="bgMusic" autoplay loop>
+  <source src="https://cdn.discordapp.com/attachments/1439658574187069450/1440946717183840348/snaptik.vn_f8YmS.mp3?ex=69215334&is=692001b4&hm=e8f6374618f2c212436630916608e7d3eecbb8c3f50be14d02d0fd0df16977b3&">
+</audio>
 
-    <div class="title">Cozy Hub</div>
-    <div class="sub">Bấm nút bên dưới để làm nhiệm vụ và nhận Key.</div>
+<div class="ui-box" id="UI">
+  <img class="avatar" src="https://media.discordapp.net/attachments/1439658574187069450/1440358993359802378/IMG_0830.png?ex=691fd898&is=691e8718&hm=8462bc352031430e1aeaa09e64e5a937f00abedbb4f85d4872065da02fc5152d&=&format=webp&quality=lossless&width=648&height=648">
 
-    <!-- Link nhiệm vụ Link4m -->
-    <button class="btn" onclick="window.location.href='https://link4m.com/jkwDHoPx'">
-        Get Key
-    </button>
+  <div class="username bbh-sans-hegarty-regular" id="username"></div>
 
-    <div class="icons">
-        <!-- YouTube -->
-        <a href="https://www.youtube.com/@VoAo-v2g" target="_blank">
-            <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
-        </a>
+  <button class="btn" onclick="openLink('https://anotepad.com/notes/33h455x5')">Moreira Method Script</button>
+  <button class="btn" onclick="openLink('https://anotepad.com/notes/8ejj5fmc')">Script dupe,spawm,lucky.event</button>
+  <button class="btn" onclick="openLink('https://anotepad.com/notes/wigh5a4n')">auto fishsing</button>
+  <button class="btn" onclick="openLink('https://anotepad.com/notes/qcjc3qhy')">Script pls donate</button>
+  <button class="btn" onclick="openLink('https://telegram.org/dl')">Mua Hack lq.ff.roblox</button>
 
-        <!-- TikTok -->
-        <a href="https://www.tiktok.com/@cozyhub15" target="_blank">
-            <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png">
-        </a>
-    </div>
+  <div class="mode-switch" onclick="toggleMode()">
+    <span>🌓</span>
+  </div>
+
+  <!-- Footer note -->
+  <div class="footer-note">
+    Mở server VIP cho người khác vào và nhập đúng link server VIP để tránh lỗi mờ màn hình hoặc lag
+  </div>
 </div>
+
+<script>
+function openLink(url) { window.open(url, "_blank"); }
+function toggleMode() { document.getElementById("UI").classList.toggle("light"); }
+
+/* Username typing effect */
+const usernameEl = document.getElementById('username');
+const usernameText = "Cozy Hub";
+let i = 0;
+function typeUsername() {
+  if(i < usernameText.length){
+    usernameEl.innerHTML += usernameText.charAt(i);
+    i++;
+    setTimeout(typeUsername, 120);
+  }
+}
+window.onload = typeUsername;
+</script>
 
 </body>
 </html>
